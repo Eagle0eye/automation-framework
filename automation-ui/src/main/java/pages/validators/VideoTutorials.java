@@ -1,9 +1,10 @@
-package testing.pages.validators;
+package pages.validators;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import testing.pages.BasePage;
+import pages.BasePage;
+
 
 public class VideoTutorials extends BasePage {
 

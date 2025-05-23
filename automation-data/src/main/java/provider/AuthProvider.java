@@ -1,41 +1,48 @@
-package Provider;
+package provider;
 
 import DTO.Login;
+import expectaions.Expectation;
 import org.testng.annotations.DataProvider;
 
+import static expectaions.api.ExpectedResponses.*;
 import static variables.AuthVariables.*;
 
-public class AuthorProvider {
-    @DataProvider( name = "loginValidCredentials")
+public class AuthProvider {
+
+
+
+    @DataProvider(name = "deletedAccount")
+    public Login[] deleteAccount() {
+        return new Login[]{buildLogin(validEmail,validPassword,NOT_SUPPORTED,NOT_SUPPORTED_MESSAGE)};
+    }
+    @DataProvider(name = "loginValidCredentials")
     public static Login[] loginValidData() {
-        Login login = new Login();
-        login.setEmail(validEmail);
-        login.setPassword(validPassword);
-        return new Login[]{login};
+        return new Login[]{buildLogin(validEmail, validPassword, OK, USER_EXISTS)};
     }
 
     @DataProvider(name = "loginInvalidIncorrectPassword")
     public static Login[] loginInvalidIncorrectPassword() {
-        Login login = new Login();
-        login.setEmail(validEmail);
-        login.setPassword(invalidPassword);
-        return new Login[]{login};
+        return new Login[]{buildLogin(validEmail, invalidPassword, NOT_FOUND, USER_NOT_FOUND)};
     }
 
     @DataProvider(name = "loginInvalidEmptyEmail")
     public static Login[] loginInvalidEmptyEmail() {
-        Login login = new Login();
-        login.setEmail("");
-        login.setPassword(validPassword);
-        return new Login[]{login};
+        return new Login[]{buildLogin(null, validPassword, BAD_REQUEST, MISSING_CREDENTIALS)};
     }
 
     @DataProvider(name = "loginInvalidNotFoundEmail")
     public static Login[] loginInvalidNotFoundEmail() {
-        Login login = new Login();
-        login.setEmail(invalidEmail);
-        login.setPassword(validPassword);
-        return new Login[]{login};
+        return new Login[]{buildLogin(invalidEmail, invalidPassword, NOT_FOUND, USER_NOT_FOUND)};
     }
 
+    private static Login buildLogin(String email, String password, int statusCode, String message) {
+        return Login.builder()
+                .email(email)
+                .password(password)
+                .expectation(Expectation.builder()
+                        .statusCode(statusCode)
+                        .message(message)
+                        .build())
+                .build();
+    }
 }

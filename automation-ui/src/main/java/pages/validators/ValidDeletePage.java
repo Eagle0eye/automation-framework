@@ -1,12 +1,14 @@
-package testing.pages.validators;
+package pages.validators;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import testing.pages.BasePage;
-import testing.pages.cores.HomePage;
+import pages.BasePage;
+import pages.cores.HomePage;
 
-public class ValidDeletePage extends BasePage {
+
+public class ValidDeletePage extends
+        BasePage {
 
     @FindBy(tagName = "h2") private WebElement deleteMessage;
     @FindBy(linkText = "Continue") private WebElement continueButton;

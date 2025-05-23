@@ -1,18 +1,13 @@
-package testing.pages.cores;
+package pages.cores;
 
-import org.openqa.selenium.By;
+import DTO.Register;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
-import testing.pages.BasePage;
-import testing.pages.validators.ValidRegisterPage;
-import testing.register.RegisterForm;
-
-import java.util.Map;
-
-import static testing.register.RegisterMapper.ToRegisterForm;
-import static util.LocatorLoader.loadLocators;
+import pages.BasePage;
+import pages.validators.ValidRegisterPage;
 
 public class RegisterPage extends BasePage {
 
@@ -42,17 +37,15 @@ public class RegisterPage extends BasePage {
     }
 
 
-    public ValidRegisterPage fillRegisterForm(String path) {
-        RegisterForm form = ToRegisterForm(path);
-
-
+    public ValidRegisterPage fillRegisterForm(Register form) {
         gender1.click();
-        name.clear(); name.sendKeys(form.getName());
+        name.clear();
+        name.sendKeys(form.getName());
         password.sendKeys(form.getPassword());
 
-        new Select(days).selectByValue(form.getDay());
-        new Select(months).selectByValue(form.getMonth());
-        new Select(years).selectByValue(form.getYear());
+        new Select(days).selectByValue(String.valueOf(form.getDay()));
+        new Select(months).selectByValue(String.valueOf(form.getMonth()));
+        new Select(years).selectByValue(String.valueOf(form.getYear()));
 
         newsletter.click();
         specialOffers.click();
@@ -61,7 +54,7 @@ public class RegisterPage extends BasePage {
         lastName.sendKeys(form.getLastname());
         company.sendKeys(form.getCompany());
 
-        address1.sendKeys(form.getAddress1());
+        address1.sendKeys(form.getAddress());
         address2.sendKeys(form.getAddress2());
 
         new Select(country).selectByValue(form.getCountry());

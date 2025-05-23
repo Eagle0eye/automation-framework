@@ -1,4 +1,4 @@
-package tests.account;
+package tests.account.delete;
 
 
 import DTO.Login;
@@ -13,16 +13,18 @@ import utils.AllureUtils;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.testng.Assert.assertEquals;
 
 @Epic("ACCOUNT")
 @Feature("DELETE OPERATION")
 public class InvalidDeleteTest extends BaseAPIClient {
-    @Story("Invalid Delete an account with /verifyLogin")
+    @Story("https://automationexercise.com/api/verifyLogin")
+    @Description("Invalid Delete an account with /verifyLogin")
     @Severity(SeverityLevel.CRITICAL)
     @Test( dataProvider = "deletedAccount",
             dataProviderClass = AuthProvider.class
             , groups = {"API"})
-    public void LoginByValidCredentials(Login form){
+    public void LoginByInValidCredentials(Login form){
 
         AllureUtils.attachJsonSchema("schemas/login-response-schema.json", "Login Response Schema");
         Response response = given()
@@ -37,7 +39,7 @@ public class InvalidDeleteTest extends BaseAPIClient {
                 .statusCode(200)
                 .extract()
                 .response();
-        Assert.assertEquals(response.getBody().jsonPath().getInt("responseCode"), form.getExpectation().getStatusCode());
-        Assert.assertEquals(response.getBody().jsonPath().get("message"), form.getExpectation().getMessage());
+        assertEquals(response.getBody().jsonPath().getInt("responseCode"), form.getExpectation().getStatusCode());
+        assertEquals(response.getBody().jsonPath().get("message"), form.getExpectation().getMessage());
     }
 }

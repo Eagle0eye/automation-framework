@@ -1,4 +1,4 @@
-package testing.register;
+package register;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package tests.product;
+package tests.product.view;
 
 import base.BaseAPIClient;
 import io.qameta.allure.*;
@@ -16,7 +16,8 @@ import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 
 @Epic("PRODUCTS")
-@Feature("GET https://automationexercise.com/api/productsList")
+@Feature("vIEW PRODUCTS")
+@Story("GET https://automationexercise.com/api/productsList")
 public class GetAllProductsTest extends BaseAPIClient {
     @Description("view all products")
     @Severity(SeverityLevel.MINOR)

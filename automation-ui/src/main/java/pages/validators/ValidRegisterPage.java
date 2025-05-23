@@ -1,15 +1,10 @@
-package testing.pages.validators;
+package pages.validators;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import testing.pages.BasePage;
-import testing.pages.cores.HomePage;
-
-import java.util.Map;
-
-import static util.LocatorLoader.loadLocators;
+import pages.BasePage;
+import pages.cores.HomePage;
 
 public class ValidRegisterPage extends BasePage {
 

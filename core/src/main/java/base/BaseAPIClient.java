@@ -4,15 +4,12 @@ import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
-import io.restassured.specification.RequestSpecification;
 
 
 import org.testng.annotations.BeforeSuite;
 import utils.Configuration;
 
 public class BaseAPIClient {
-
-    protected RequestSpecification request;
 
     @BeforeSuite
     public void setup() {

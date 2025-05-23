@@ -1,10 +1,12 @@
-package testing.pages.cores;
+package pages.cores;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import testing.pages.BasePage;
+import pages.BasePage;
+
 
 public class HomePage extends BasePage {
 
@@ -16,7 +18,7 @@ public class HomePage extends BasePage {
 
 
     }
-
+    @Step("verify Home page")
     public String verify() {
         String message = verifyHomePage.getText();
         log.info("Message: {}", message);
@@ -24,13 +26,14 @@ public class HomePage extends BasePage {
     }
 
 
-
+    @Step("verify Subscription is Visible")
     public boolean verifySUBSCRIPTIONisVisible() {
         boolean visibility = subscription.isDisplayed();
         log.info("verify SUBSCRIPTION is Visible");
         return visibility;
     }
 
+    @Step("scroll down in Home page")
     public HomePage scrollDownWithoutArrow(){
         JavascriptExecutor js = (JavascriptExecutor) driver;
         js.executeScript("window.scrollBy(0,document.body.scrollHeight)");

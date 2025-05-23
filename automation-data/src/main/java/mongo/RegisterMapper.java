@@ -1,13 +1,13 @@
 package mongo;
 
+import DTO.Login;
 import DTO.Register;
 import org.bson.Document;
 
-public class MongoDBMapper {
+public class RegisterMapper {
     public static Document toDocument(Register form) {
         Document doc = new Document();
-        doc.append("users", new Document()
-                .append("title", form.getTitle())
+        doc.append("title", form.getTitle())
                 .append("name", form.getName())
                 .append("email", form.getEmail())
                 .append("password", form.getPassword())
@@ -21,11 +21,15 @@ public class MongoDBMapper {
                 .append("state", form.getState())
                 .append("city", form.getCity())
                 .append("zip code", form.getZipcode())
-                .append("phone", form.getPhone())
-
+                .append("phone", form.getPhone()
         );
         return doc;
+    }
 
-
+    public static Login fromDocument(Document doc) {
+        return Login.builder()
+                .email(doc.getString("email"))
+                .password(doc.getString("password"))
+                .build();
     }
 }

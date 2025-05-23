@@ -1,4 +1,4 @@
-package tests.product;
+package tests.product.search;
 
 import base.BaseAPIClient;
 import io.qameta.allure.*;
@@ -8,9 +8,6 @@ import io.restassured.response.Response;
 import org.testng.annotations.Test;
 import provider.ProductProvider;
 
-import java.util.List;
-import java.util.Map;
-
 import static expectaions.api.ExpectedResponses.*;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
@@ -18,7 +15,8 @@ import static org.testng.Assert.assertEquals;
 import static utils.AllureUtils.attachJsonSchema;
 
 @Epic("PRODUCTS")
-@Feature("POST https://automationexercise.com/api/searchProduct")
+@Feature("SEARCH ABOUT PRODUCTS")
+@Story("POST https://automationexercise.com/api/searchProduct")
 public class ValidSearchProductTest extends BaseAPIClient {
     @Description("valid search about products using parameter search_product")
     @Severity(SeverityLevel.CRITICAL)

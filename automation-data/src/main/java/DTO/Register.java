@@ -1,12 +1,14 @@
 package DTO;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class User {
-    private String name, email, password;
+@Builder(toBuilder = true)
+public class Register {
+    private String title, name, email, password;
 
-    private short day, month, year;
+    private int day, month, year;
 
     private String firstname, lastname;
 

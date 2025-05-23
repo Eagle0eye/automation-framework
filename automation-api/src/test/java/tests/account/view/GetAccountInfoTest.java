@@ -1,9 +1,8 @@
-package tests.account.read;
+package tests.account.view;
 
 import DTO.Login;
 import base.BaseAPIClient;
 import io.qameta.allure.*;
-import io.restassured.http.ContentType;
 import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import org.testng.Assert;
@@ -12,6 +11,7 @@ import provider.AuthProvider;
 import utils.AllureUtils;
 
 import static io.restassured.RestAssured.given;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 
 @Epic("ACCOUNT")
@@ -24,17 +24,19 @@ public class GetAccountInfoTest extends BaseAPIClient {
             dataProviderClass = AuthProvider.class
             , groups = {"API"}
     )
-    public void LoginByValidCredentials(Login login) {
+    public void getUserInfo(Login login) {
         AllureUtils.attachJsonSchema("schemas/userinfo-schema.json", "User Details Response Schema");
 
 
         Response response = given()
+
                 .param("email",login.getEmail())
+                .param("password",login.getPassword())
                 .when().get("/getUserDetailByEmail")
                 .then()
                 .assertThat()
                 .statusCode(200)
-                .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/userinfo-schema.json"))
+                .body(matchesJsonSchemaInClasspath("schemas/account-details-scheme.json"))
                 .extract()
                 .response();
 

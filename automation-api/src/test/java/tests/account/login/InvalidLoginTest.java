@@ -1,4 +1,4 @@
-package tests.account;
+package tests.account.login;
 
 
 import DTO.Login;
@@ -17,12 +17,13 @@ import utils.AllureUtils;
 import static io.restassured.RestAssured.given;
 
 @Epic("ACCOUNT")
-@Feature("LOGIN - FAILED")
+@Feature("LOGIN")
+@Story("POST https://automationexercise.com/api/verifyLogin")
 public class InvalidLoginTest extends BaseAPIClient {
 
     private static final Logger log = LoggerFactory.getLogger(InvalidLoginTest.class);
 
-    @Story("Invalid login with incorrect password")
+    @Description("Invalid login with incorrect password")
     @Severity(SeverityLevel.CRITICAL)
     @Test(dataProvider = "loginInvalidIncorrectPassword",
             dataProviderClass = AuthProvider.class
@@ -36,7 +37,7 @@ public class InvalidLoginTest extends BaseAPIClient {
                 form.getExpectation().getMessage());    }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Invalid Login with Empty Email")
+    @Description("Invalid Login with Empty Email")
     @Test(dataProvider = "loginInvalidEmptyEmail",dataProviderClass = AuthProvider.class
             , groups = {"API"})
     public void LoginByEmptyEmail(Login form){
@@ -45,7 +46,7 @@ public class InvalidLoginTest extends BaseAPIClient {
     }
 
     @Severity(SeverityLevel.CRITICAL)
-    @Story("Invalid Login with not found email")
+    @Description("Invalid Login with not found email")
     @Test(dataProvider = "loginInvalidNotFoundEmail",dataProviderClass = AuthProvider.class
             , groups = {"API"})
     public void LoginByNotFoundEmail(Login form){

@@ -1,26 +1,25 @@
-package tests.account;
+package tests.account.login;
 
 
 import DTO.Login;
+import io.qameta.allure.*;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import provider.AuthProvider;
 import base.BaseAPIClient;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import jdk.jfr.Description;
 import org.testng.annotations.Test;
 import utils.AllureUtils;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.testng.Assert.assertEquals;
 
 
 @Epic("ACCOUNT")
-@Feature("LOGIN - SUCCESSFUL")
+@Feature("LOGIN")
+@Story("POST https://automationexercise.com/api/verifyLogin")
 public class ValidLoginTest extends BaseAPIClient {
 
 
@@ -34,7 +33,6 @@ public class ValidLoginTest extends BaseAPIClient {
 
         AllureUtils.attachJsonSchema("schemas/login-response-schema.json", "Login Response Schema");
         Response response = given()
-                .header("Content-Type", "application/json")
                 .contentType(ContentType.MULTIPART)
                 .multiPart("email", form.getEmail())
                 .multiPart("password", form.getPassword())
@@ -45,7 +43,7 @@ public class ValidLoginTest extends BaseAPIClient {
                 .statusCode(200)
                 .extract()
                 .response();
-        Assert.assertEquals(response.getBody().jsonPath().getInt("responseCode"), form.getExpectation().getStatusCode());
-        Assert.assertEquals(response.getBody().jsonPath().get("message"), form.getExpectation().getMessage());
+        assertEquals(response.getBody().jsonPath().getInt("responseCode"), form.getExpectation().getStatusCode());
+        assertEquals(response.getBody().jsonPath().get("message"), form.getExpectation().getMessage());
     }
 }

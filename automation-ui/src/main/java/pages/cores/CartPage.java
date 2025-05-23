@@ -1,7 +1,7 @@
-package testing.pages.cores;
+package pages.cores;
 
 import org.openqa.selenium.WebDriver;
-import testing.pages.BasePage;
+import pages.BasePage;
 
 public class CartPage extends BasePage {
     public CartPage(WebDriver driver) {

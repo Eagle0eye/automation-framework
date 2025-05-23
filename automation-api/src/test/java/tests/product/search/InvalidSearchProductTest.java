@@ -1,4 +1,4 @@
-package tests.product;
+package tests.product.search;
 
 import base.BaseAPIClient;
 import io.qameta.allure.*;
@@ -15,7 +15,8 @@ import static org.testng.Assert.assertEquals;
 import static utils.AllureUtils.attachJsonSchema;
 
 @Epic("PRODUCTS")
-@Feature("POST https://automationexercise.com/api/searchProduct")
+@Feature("SEARCH ABOUT PRODUCTS")
+@Story("POST https://automationexercise.com/api/searchProduct")
 public class InvalidSearchProductTest extends BaseAPIClient {
     @Description("Invalid search about products missing parameter search_product")
     @Severity(SeverityLevel.NORMAL)
@@ -31,7 +32,7 @@ public class InvalidSearchProductTest extends BaseAPIClient {
                 .body(matchesJsonSchemaInClasspath("schemas/login-response-schema.json")).extract().response();
         JsonPath jsonPath = response.jsonPath();
         assertEquals(jsonPath.getInt("responseCode"), BAD_REQUEST);
-        assertEquals(jsonPath.getString("message"), String.format(VALID_FIELD,"search_product"));
+        assertEquals(jsonPath.getString("message"), String.format(REQUIRED_REGISTER,"search_product"));
 
     }
 }

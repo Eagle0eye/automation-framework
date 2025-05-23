@@ -1,9 +1,9 @@
-package testing.pages.cores;
+package pages.cores;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import testing.pages.BasePage;
+import pages.BasePage;
 
 public class ProductsPage extends BasePage {
 

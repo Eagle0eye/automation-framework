@@ -1,4 +1,4 @@
-package tests.product;
+package tests.product.add;
 
 import base.BaseAPIClient;
 import io.qameta.allure.*;
@@ -15,7 +15,8 @@ import static org.testng.Assert.assertEquals;
 import static utils.AllureUtils.attachJsonSchema;
 
 @Epic("PRODUCTS")
-@Feature("POST https://automationexercise.com/api/productsList")
+@Feature("ADD NEW PRODUCT")
+@Story("POST https://automationexercise.com/api/productsList")
 public class AddNewProduct extends BaseAPIClient {
     @Description("Add a new product is not allowed")
     @Severity(SeverityLevel.MINOR)

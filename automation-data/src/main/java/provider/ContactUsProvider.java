@@ -1,23 +1,35 @@
-package Provider;
+package provider;
 
 import DTO.ContactUs;
 import org.testng.annotations.DataProvider;
-import variables.ContactUsVariables;
+
+import static variables.ContactUsVariables.*;
 
 
 public class ContactUsProvider {
 
-    @DataProvider(name = "validInfo")
+    @DataProvider(name = "SendValidInfo")
     public ContactUs[] validInfo(){
-        ContactUs contactUs = new ContactUs();
-        contactUs.setName(ContactUsVariables.name);
-        contactUs.setEmail(ContactUsVariables.email);
-        contactUs.setSubject(ContactUsVariables.subject);
-        contactUs.setMessage(ContactUsVariables.message);
-        contactUs.setPath(ContactUsVariables.path);
-        return new ContactUs[] {contactUs};
+        return new ContactUs[] {
+                ContactUs.builder()
+                        .name(name)
+                        .email(email)
+                        .subject(subject)
+                        .message(message)
+                        .path(path)
+                .build()};
+    }
 
-
+    @DataProvider(name = "SendWithoutEmail")
+    public ContactUs[] SendWithoutEmail(){
+        return new ContactUs[] {
+                ContactUs.builder()
+                        .name(name)
+                        .email(null)
+                        .subject(subject)
+                        .message(message)
+                        .path(path)
+                .build()};
     }
 
 }

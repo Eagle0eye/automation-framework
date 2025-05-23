@@ -1,6 +1,9 @@
 {
   "type": "object",
   "properties": {
+    "responseCode": {
+      "type":  "integer"
+    },
     "brands": {
       "type": "array",
       "items": {
@@ -13,9 +16,11 @@
             "type": "string"
           }
         },
-        "required": ["id", "brand"]
+        "required": ["id", "brand"],
+        "additionalProperties": false
       }
     }
   },
-  "required": ["brands"]
+  "required": ["brands"],
+  "additionalProperties": false
 }

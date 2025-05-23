@@ -1,10 +1,10 @@
-package testing.pages.cores;
+package pages.cores;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import testing.pages.BasePage;
+import pages.BasePage;
 
 public class TestCasePage extends BasePage {
 

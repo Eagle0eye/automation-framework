@@ -20,13 +20,14 @@ import static org.testng.Assert.assertEquals;
 
 @Epic("ACCOUNT")
 @Feature("UPDATE USER INFORMATION")
-public class invalidUpdateAccount extends BaseAPIClient {
-    @Story("PUT: https://automationexercise.com/api/updateAccount")
+@Story("PUT: https://automationexercise.com/api/updateAccount")
+
+public class InvalidUpdateAccount extends BaseAPIClient {
     @Description("Invalid Update User Information By Invalid Credentials")
     @Severity(SeverityLevel.CRITICAL)
     @Test(dataProvider = "RegisterInvalidExistEmail",
             dataProviderClass = RegisterProvider.class,
-            groups = {"API"},timeOut = 60000)
+            groups = {"API"})
     public void testNotUpdateAccount(Register register) {
         AllureUtils.attachJsonSchema("schemas/login-response-schema.json","Update Response Schema");
         Response response = updateUserByEmail(register.getEmail(),register);
@@ -34,7 +35,7 @@ public class invalidUpdateAccount extends BaseAPIClient {
         JsonPath res = response.body().jsonPath();
 
         assertEquals(res.getInt("responseCode"), NOT_FOUND);
-        assertEquals(res.getString("message"), NOT_fFOUND_ACCOUNT);
+        assertEquals(res.getString("message"), NOT_FOUND_ACCOUNT);
     }
 
 
