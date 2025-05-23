@@ -1,0 +1,68 @@
+package tests.account.update;
+
+import DTO.Register;
+import base.BaseAPIClient;
+import io.qameta.allure.*;
+import io.restassured.http.ContentType;
+import io.restassured.module.jsv.JsonSchemaValidator;
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
+import jdk.jfr.Description;
+import org.testng.annotations.Test;
+import provider.RegisterProvider;
+import utils.AllureUtils;
+
+
+
+import static expectaions.api.ExpectedResponses.*;
+import static io.restassured.RestAssured.given;
+import static org.testng.Assert.assertEquals;
+
+@Epic("ACCOUNT")
+@Feature("UPDATE USER INFORMATION")
+public class invalidUpdateAccount extends BaseAPIClient {
+    @Story("PUT: https://automationexercise.com/api/updateAccount")
+    @Description("Invalid Update User Information By Invalid Credentials")
+    @Severity(SeverityLevel.CRITICAL)
+    @Test(dataProvider = "RegisterInvalidExistEmail",
+            dataProviderClass = RegisterProvider.class,
+            groups = {"API"},timeOut = 60000)
+    public void testNotUpdateAccount(Register register) {
+        AllureUtils.attachJsonSchema("schemas/login-response-schema.json","Update Response Schema");
+        Response response = updateUserByEmail(register.getEmail(),register);
+
+        JsonPath res = response.body().jsonPath();
+
+        assertEquals(res.getInt("responseCode"), NOT_FOUND);
+        assertEquals(res.getString("message"), NOT_fFOUND_ACCOUNT);
+    }
+
+
+
+    private Response updateUserByEmail(String email, Register register) {
+        return given()
+                .accept(ContentType.JSON)
+                .contentType(ContentType.MULTIPART)
+                .multiPart("email", register.getEmail())
+                .multiPart("password", register.getPassword()+"incorrect")
+                .multiPart("name", register.getName())
+                .multiPart("title", register.getTitle())
+                .multiPart("first_name", register.getFirstname())
+                .multiPart("last_name", register.getLastname())
+                .multiPart("company", register.getCompany())
+                .multiPart("address1", register.getAddress())
+                .multiPart("address2", register.getAddress2())
+                .multiPart("country", register.getCountry())
+                .multiPart("state", register.getState())
+                .multiPart("city", register.getCity())
+                .multiPart("phone", register.getPhone())
+                .multiPart("zipcode", register.getZipcode())
+                .when()
+                .put("/updateAccount")
+                .then()
+                .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schemas/login-response-schema.json"))
+                .extract()
+                .response();
+
+    }
+}
