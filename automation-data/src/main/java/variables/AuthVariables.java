@@ -2,11 +2,6 @@ package variables;
 
 import DTO.Login;
 import com.github.javafaker.Faker;
-import mongo.AuthRepository;
-import mongo.RegisterRepository;
-import util.RandomValue;
-
-import java.util.List;
 
 import static util.EmailGenerator.generate;
 

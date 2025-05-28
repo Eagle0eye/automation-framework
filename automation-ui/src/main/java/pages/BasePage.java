@@ -9,6 +9,7 @@ import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pages.cores.*;
+import pages.interfaces.IBasePage;
 import pages.validators.ValidDeletePage;
 import pages.validators.VideoTutorials;
 
@@ -16,7 +17,7 @@ import pages.validators.VideoTutorials;
 import java.time.Duration;
 
 
-public class BasePage {
+public class BasePage implements IBasePage {
 
     protected WebDriver driver;
     protected WebDriverWait wait;
@@ -43,74 +44,92 @@ public class BasePage {
         PageFactory.initElements(driver, this);
     }
 
+
     @Step("Open Website")
+    @Override
     public BasePage open(){
         String baseUrl = "https://automationexercise.com";
         driver.get(baseUrl);
         log.info("Browser: {} baseUrl: {}", driver.getTitle(),baseUrl);
         return this;
     }
+
     @Step("Go to Home page")
-    public HomePage goToHomePage() {
+    @Override
+    public HomePage gotoHomePage() {
         homeLink.click();
         log.info("Navigated to home page");
         return new HomePage(driver);
     }
 
-    public ProductsPage goToProductsPage() {
+    @Override
+    @Step("Go To Products page")
+    public ProductsPage gotoProductsPage() {
         productsLink.click();
         log.info("Navigated to products page");
         return new ProductsPage(driver);
     }
 
     @Step("Go To Cart Page")
-    public CartPage goToCartPage() {
+    @Override
+    public CartPage gotoCartPage() {
         cartLink.click();
         log.info("Navigated to cart page");
         return new CartPage(driver);
     }
 
     @Step("Go to Signup/Login Page")
-    public LoginPage goToLoginPage() {
+    @Override
+    public LoginPage gotoLoginPage() {
         signupLink.click();
         log.info("Navigated to login page");
         return new LoginPage(driver);
     }
+
     @Step("Go To Contact Us Page")
-    public ContactUsPage goToContactUsPage() {
+    @Override
+    public ContactUsPage gotoContactUsPage() {
         contactUsLink.click();
         log.info("Navigated to contact us page");
         return new ContactUsPage(driver);
     }
+
     @Step("Go to Test Cases Page")
-    public TestCasePage goToTestCasesPage() {
+    @Override
+    public TestCasePage gotoTestCasesPage() {
         testCasesLink.click();
         log.info("Navigated to test cases page");
         return new TestCasePage(driver);
     }
+
     @Step("Go to API Testing page")
-    public APITestingPage goToAPITestingPage() {
+    @Override
+    public APITestingPage gotoAPITestingPage() {
         apiTestingLink.click();
         log.info("Navigated to API Testing page");
         return new APITestingPage(driver);
     }
-    @Step("Go to Video Tutorial pahe")
-    public VideoTutorials goToVideoTutorialPage() {
+
+    @Step("Go to Video Tutorial page")
+    @Override
+    public VideoTutorials gotoVideoTutorialPage() {
         videoTutorialLink.click();
         log.info("Navigated to Video Tutorial page");
         return new VideoTutorials(driver);
     }
+
     @Step("Delete an account")
-    public ValidDeletePage goToDeleteAccountPage() {
+    @Override
+    public ValidDeletePage gotoDeleteAccountPage() {
         deleteAccountLink.click();
         log.info("Navigated to delete account page");
         return new ValidDeletePage(driver);
     }
+
     @Step("Logout")
+    @Override
     public void logout() {
         logoutLink.click();
         log.info("Logout");
     }
-
-
 }

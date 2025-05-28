@@ -3,7 +3,6 @@ package tests.account.view;
 import DTO.Login;
 import base.BaseAPIClient;
 import io.qameta.allure.*;
-import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;

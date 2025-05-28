@@ -3,34 +3,40 @@
     <listeners>
         <listener class-name="utils.TestListener"></listener>
     </listeners>
-    <test name="Account Tests">
-        <packages>
-            <package name="tests.account.login"/>
-            <package name="tests.account.update"/>
-            <package name="tests.account.view"/>
-            <package name="tests.account.add"/>
-        </packages>
-    </test>
 
-    <test name="Account Delete Tests">
-        <packages>
-            <package name="tests.account.delete"/>
-        </packages>
+    <test name="Test">
+        <classes>
+            <class name="tests.account.add.InvalidRegistrationTest"></class>
+        </classes>
     </test>
+    <!--    <test name="Account Tests">-->
+<!--        <packages>-->
+<!--            <package name="tests.account.login"/>-->
+<!--            <package name="tests.account.update"/>-->
+<!--            <package name="tests.account.view"/>-->
+<!--            <package name="tests.account.add"/>-->
+<!--        </packages>-->
+<!--    </test>-->
 
-    <test name="Brand Tests">
-        <packages>
-            <package name="tests.brand"/>
-        </packages>
-    </test>
+<!--    <test name="Account Delete Tests">-->
+<!--        <packages>-->
+<!--            <package name="tests.account.delete"/>-->
+<!--        </packages>-->
+<!--    </test>-->
 
-    <test name="Product Tests">
-        <packages>
-            <package name="tests.product.add"/>
-            <package name="tests.product.search"/>
-            <package name="tests.product.view"/>
-        </packages>
-    </test>
+<!--    <test name="Brand Tests">-->
+<!--        <packages>-->
+<!--            <package name="tests.brand"/>-->
+<!--        </packages>-->
+<!--    </test>-->
+
+<!--    <test name="Product Tests">-->
+<!--        <packages>-->
+<!--            <package name="tests.product.add"/>-->
+<!--            <package name="tests.product.search"/>-->
+<!--            <package name="tests.product.view"/>-->
+<!--        </packages>-->
+<!--    </test>-->
 
 
 

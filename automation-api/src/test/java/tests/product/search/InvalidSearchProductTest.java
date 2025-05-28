@@ -8,7 +8,6 @@ import io.restassured.response.Response;
 import org.testng.annotations.Test;
 
 import static expectaions.api.ExpectedResponses.*;
-import static expectaions.api.ExpectedResponses.VALID_FIELD;
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.testng.Assert.assertEquals;

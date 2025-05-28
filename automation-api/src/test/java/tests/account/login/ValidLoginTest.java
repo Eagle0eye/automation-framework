@@ -5,7 +5,6 @@ import DTO.Login;
 import io.qameta.allure.*;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.testng.Assert;
 import provider.AuthProvider;
 import base.BaseAPIClient;
 import jdk.jfr.Description;

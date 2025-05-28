@@ -2,16 +2,11 @@ package pages.cores;
 
 import DTO.Login;
 import DTO.Register;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pages.BasePage;
 import pages.validators.ValidLoginPage;
-
-import java.util.Map;
-
-import static util.LocatorLoader.loadLocators;
 
 public class LoginPage extends BasePage {
     @FindBy(css = ".signup-form > h2:nth-child(1)") private WebElement signupVerify;
@@ -22,7 +17,6 @@ public class LoginPage extends BasePage {
     @FindBy(css = ".signup-form > form:nth-child(2) > input:nth-child(2)") private WebElement registeredName;
     @FindBy(css = ".signup-form > form:nth-child(2) > input:nth-child(3)") private WebElement registeredEmail;
     @FindBy(css = "button.btn:nth-child(5)") private WebElement registeredButton;
-    @FindBy(css = ".signup-form > form:nth-child(2) > p:nth-child(5)") private WebElement registeredPassword;
 
     public LoginPage(WebDriver driver) {
         super(driver);

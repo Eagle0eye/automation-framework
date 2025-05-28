@@ -6,7 +6,6 @@ import base.BaseAPIClient;
 import io.qameta.allure.*;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 import provider.AuthProvider;
 import utils.AllureUtils;
