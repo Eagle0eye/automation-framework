@@ -1,5 +1,8 @@
 package variables;
 
+import DTO.ProductInfo;
+
+import java.util.List;
 import java.util.Map;
 
 public class ProductVariables {
@@ -9,4 +12,6 @@ public class ProductVariables {
             "jeans", 3,
             "tshirt", 6
     );
+
+    public static List<ProductInfo> ALL_PRODUCTS = null;
 }

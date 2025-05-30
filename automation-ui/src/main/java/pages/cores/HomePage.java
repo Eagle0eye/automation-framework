@@ -16,7 +16,6 @@ public class HomePage extends BasePage {
     public HomePage(WebDriver driver) {
         super(driver);
 
-
     }
     @Step("verify Home page")
     public String verify() {

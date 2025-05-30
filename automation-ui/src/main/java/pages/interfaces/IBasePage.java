@@ -1,12 +1,11 @@
 package pages.interfaces;
 
-import pages.BasePage;
 import pages.cores.*;
 import pages.validators.ValidDeletePage;
 import pages.validators.VideoTutorials;
 
 public interface IBasePage {
-    BasePage open();
+    void open();
     HomePage gotoHomePage();
     ProductsPage  gotoProductsPage();
     CartPage gotoCartPage();

@@ -1,6 +1,7 @@
 package pages;
 
 import io.qameta.allure.Step;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -12,6 +13,8 @@ import pages.cores.*;
 import pages.interfaces.IBasePage;
 import pages.validators.ValidDeletePage;
 import pages.validators.VideoTutorials;
+import utils.ProductRepository;
+import variables.ProductVariables;
 
 
 import java.time.Duration;
@@ -26,32 +29,30 @@ public class BasePage implements IBasePage {
     @FindBy(linkText = "Home") protected WebElement homeLink;
     @FindBy(linkText = "Products" ) private WebElement productsLink;
     @FindBy(linkText = "Cart") private WebElement cartLink;
-    @FindBy(linkText = "Signup / Login") private WebElement signupLink;
     @FindBy(linkText = "Test Cases") private WebElement testCasesLink;
     @FindBy(linkText = "API Testing") private WebElement apiTestingLink;
     @FindBy(linkText = "Video Tutorials") private WebElement videoTutorialLink;
     @FindBy(linkText = "Contact US") private WebElement contactUsLink;
 
     // Authenticated navigation
-    @FindBy(linkText = "Logout") private WebElement logoutLink;
-    @FindBy(linkText = "Delete Account") private WebElement deleteAccountLink;
 
     public static final Logger log = LoggerFactory.getLogger(BasePage.class);
 
     public BasePage(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(1));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         PageFactory.initElements(driver, this);
     }
 
 
+
+
     @Step("Open Website")
     @Override
-    public BasePage open(){
+    public void open(){
         String baseUrl = "https://automationexercise.com";
         driver.get(baseUrl);
         log.info("Browser: {} baseUrl: {}", driver.getTitle(),baseUrl);
-        return this;
     }
 
     @Step("Go to Home page")
@@ -81,7 +82,8 @@ public class BasePage implements IBasePage {
     @Step("Go to Signup/Login Page")
     @Override
     public LoginPage gotoLoginPage() {
-        signupLink.click();
+        WebElement signup_login = driver.findElement(By.linkText("Signup / Login"));
+        signup_login.click();
         log.info("Navigated to login page");
         return new LoginPage(driver);
     }
@@ -121,6 +123,7 @@ public class BasePage implements IBasePage {
     @Step("Delete an account")
     @Override
     public ValidDeletePage gotoDeleteAccountPage() {
+        WebElement deleteAccountLink = driver.findElement(By.linkText("Delete Account"));
         deleteAccountLink.click();
         log.info("Navigated to delete account page");
         return new ValidDeletePage(driver);
@@ -129,6 +132,7 @@ public class BasePage implements IBasePage {
     @Step("Logout")
     @Override
     public void logout() {
+        WebElement logoutLink = driver.findElement(By.linkText("Logout"));
         logoutLink.click();
         log.info("Logout");
     }

@@ -1,14 +1,20 @@
 package provider;
 
 import org.testng.annotations.DataProvider;
+import util.ProductsGenerator;
 import variables.ProductVariables;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.Map.Entry;
 
+import static util.ProductsGenerator.generateProducts;
+
 public class ProductProvider {
+    @DataProvider(name = "AllProducts")
+    public Map<String, Integer>[] dataProvider() {
+        return new Map[]{ generateProducts(ProductVariables.ALL_PRODUCTS) };
+    }
+
 
     @DataProvider(name = "SearchValues")
     public static Object[][] getRandomSearchValue() {

@@ -3,6 +3,7 @@
   <component name="JavaProjectCodeInsightSettings">
     <included-static-names>
       <name>org.testng.Assert.assertEquals</name>
+      <name>util.ProductsGenerator.generateProducts</name>
     </included-static-names>
   </component>
 </project>
