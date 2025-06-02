@@ -37,4 +37,8 @@ public class AuthRepository {
         Document filter = new Document("email", email);
         return collection.find(filter).first() != null;
     }
+    public Document getUserByEmail(String email) {
+        Document filter = new Document("email", email);
+        return collection.find(filter).first();
+    }
 }

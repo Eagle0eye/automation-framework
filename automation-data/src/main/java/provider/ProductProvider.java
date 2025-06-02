@@ -1,7 +1,7 @@
 package provider;
 
 import org.testng.annotations.DataProvider;
-import util.ProductsGenerator;
+
 import variables.ProductVariables;
 
 import java.util.*;
@@ -9,10 +9,11 @@ import java.util.Map.Entry;
 
 import static util.ProductsGenerator.generateProducts;
 
+
 public class ProductProvider {
     @DataProvider(name = "AllProducts")
     public Map<String, Integer>[] dataProvider() {
-        return new Map[]{ generateProducts(ProductVariables.ALL_PRODUCTS) };
+        return new Map[]{ generateProducts(5) };
     }
 
 

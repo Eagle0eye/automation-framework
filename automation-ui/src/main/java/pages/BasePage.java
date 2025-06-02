@@ -13,8 +13,6 @@ import pages.cores.*;
 import pages.interfaces.IBasePage;
 import pages.validators.ValidDeletePage;
 import pages.validators.VideoTutorials;
-import utils.ProductRepository;
-import variables.ProductVariables;
 
 
 import java.time.Duration;
@@ -43,9 +41,6 @@ public class BasePage implements IBasePage {
         wait = new WebDriverWait(driver, Duration.ofSeconds(5));
         PageFactory.initElements(driver, this);
     }
-
-
-
 
     @Step("Open Website")
     @Override

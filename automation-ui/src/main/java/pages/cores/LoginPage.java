@@ -1,5 +1,6 @@
 package pages.cores;
 
+import Cache.DTO.UserInfo;
 import DTO.Login;
 import DTO.Register;
 import org.openqa.selenium.WebDriver;
@@ -7,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import pages.BasePage;
 import pages.validators.ValidLoginPage;
+import Cache.Cache;
 
 public class LoginPage extends BasePage {
     @FindBy(css = ".signup-form > h2:nth-child(1)") private WebElement signupVerify;
@@ -27,6 +29,7 @@ public class LoginPage extends BasePage {
         password.sendKeys(form.getPassword());
         loginButton.click();
         log.info("login email: {} password: {}",form.getEmail() ,form.getPassword());
+        Cache.put("test-account", UserInfo.builder().email(form.getEmail()).password(form.getPassword()).build());
         return new ValidLoginPage(driver);
     }
 

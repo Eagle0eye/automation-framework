@@ -13,8 +13,6 @@ import utils.enums.CATEGORY;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 public class ProductFilter {
 
@@ -32,7 +30,8 @@ public class ProductFilter {
 
     public List<ProductInfo> reload(){
         List<WebElement> productsElements = driver.findElements(By.cssSelector("div.col-sm-4"));
-        String name = "NOT_FOUND", price= "NOT_FOUND";
+        String name = "NOT_FOUND";
+        String price= "0.0";
         for (WebElement item : productsElements) {
 
             try {
@@ -51,15 +50,11 @@ public class ProductFilter {
                     log.warn("Price not found in product overlay: {}", e.getMessage());
                 }
 
-                String productId = product.findElement(By.cssSelector("a.add-to-cart"))
-                        .getDomAttribute("data-product-id");
-
-                log.info("Extracted: name={}, price={}, productId={}", name, price, productId);
+                log.info("Extracted: name={}, price={}", name, price);
 
                 productInfos.add(ProductInfo.builder()
-                        .productName(name)
-                        .productPrice(price)
-                        .productId(productId)
+                        .name(name)
+                        .price(Integer.parseInt(price))
                         .build());
 
             } catch (Exception e) {
@@ -76,7 +71,8 @@ public class ProductFilter {
     - search(BRAND)
      */
     public ProductsPage search(String text)
-    {   return new ProductsPage(driver);    }
+    {
+        return new ProductsPage(driver);    }
 
     public ProductsPage search(CATEGORY category) {
         WebElement selectedCategory = driver.findElement(By.id(category.getMainCategory().toString()));
@@ -88,17 +84,5 @@ public class ProductFilter {
         WebElement selectedBrand = driver.findElement(By.id(brand.toString()));
         selectedBrand.click();
         return new ProductsPage(driver);
-    }
-    /*
-    select products by:
-    - select(text)
-    - select(List<String> productNames)
-     */
-    public void select(String productName) {
-
-    }
-
-    public void search(Map<String,Integer> productNames) {
-
     }
 }

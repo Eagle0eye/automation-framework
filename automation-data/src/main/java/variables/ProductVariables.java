@@ -2,6 +2,7 @@ package variables;
 
 import DTO.ProductInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,5 +14,5 @@ public class ProductVariables {
             "tshirt", 6
     );
 
-    public static List<ProductInfo> ALL_PRODUCTS = null;
+    public static List<ProductInfo> ALL_PRODUCTS = new ArrayList<>();
 }
