@@ -21,7 +21,7 @@ public class HomePage extends BasePage {
         productsService = new ProductsService(driver);
     }
 
-    public ProductsService Filter() {
+    public ProductsService order() {
         return this.productsService;
     }
 

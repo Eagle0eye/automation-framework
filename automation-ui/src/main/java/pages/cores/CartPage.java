@@ -5,9 +5,11 @@ import Cache.DTO.ProductCache;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.BasePage;
 import pages.interfaces.ICartPage;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
@@ -29,9 +31,10 @@ public class CartPage extends BasePage implements ICartPage {
 
     @Override
     public String isCartEmpty() {
-        WebElement emptyCart =  driver.findElement(By.id("empty_cart"));
-        WebElement textElement = emptyCart.findElement(By.tagName("p"));
-        return textElement.getText();
+
+        By emptyCartLocator = By.cssSelector("#empty_cart > p");
+        WebElement emptyCart = wait.until(ExpectedConditions.visibilityOfElementLocated(emptyCartLocator));
+        return emptyCart.getText();
     }
 
     @Override
@@ -86,7 +89,7 @@ public class CartPage extends BasePage implements ICartPage {
 
                 if (verifyProductMatchesCache(uiProduct.getProductName(), uiProduct.getQuantity(), uiProduct.getPrice() * uiProduct.getQuantity())) {
                     log.warn("Product '{}' in UI does not match cached data. Skipping deletion.", uiProduct.getProductName());
-                    return this;
+                    return new CartPage(driver);
                 }
 
                 WebElement deleteButton = row.findElement(By.cssSelector(".cart_quantity_delete"));

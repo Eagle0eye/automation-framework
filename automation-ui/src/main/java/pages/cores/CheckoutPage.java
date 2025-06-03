@@ -1,5 +1,6 @@
 package pages.cores;
 
+import DTO.CartItem;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -31,11 +32,7 @@ public class CheckoutPage extends BasePage implements ICheckoutPage {
         List<WebElement> productRows = driver.findElements(By.cssSelector(".cart_info > table > tbody > tr"));
 
         for (int i = 0; i < productRows.size() ; i++) {
-            String productName = productRows.get(i).findElement(By.cssSelector(".cart_description h4 a")).getText();
-            String category = productRows.get(i).findElement(By.cssSelector(".cart_description p")).getText();
-            String price = productRows.get(i).findElement(By.cssSelector(".cart_price p")).getText();
-            String quantity = productRows.get(i).findElement(By.cssSelector(".cart_quantity button")).getText();
-            String itemTotal = productRows.get(i).findElement(By.cssSelector(".cart_total_price")).getText();
+            CartItem item = getProductsCheckout(productRows.get(i));
 
         }
 
@@ -57,4 +54,19 @@ public class CheckoutPage extends BasePage implements ICheckoutPage {
         super(driver);
     }
 
+
+
+    private CartItem getProductsCheckout(WebElement row){
+        String name = row.findElement(By.cssSelector(".cart_description h4 a")).getText();
+        String price = row.findElement(By.cssSelector(".cart_price p")).getText();
+        String quantity = row.findElement(By.cssSelector(".cart_quantity button")).getText();
+        String itemTotal = row.findElement(By.cssSelector(".cart_total_price")).getText();
+
+        return CartItem.builder()
+                .productName(name)
+                .price(price)
+                .quantity(quantity)
+                .totalPrice(itemTotal)
+                .build();
+    }
 }

@@ -11,10 +11,19 @@ import static util.ProductsGenerator.generateProducts;
 
 
 public class ProductProvider {
-    @DataProvider(name = "AllProducts")
-    public Map<String, Integer>[] dataProvider() {
-        return new Map[]{ generateProducts(5) };
+    @DataProvider(name = "generatedProducts")
+    public Object[][] getGeneratedProducts() {
+        Map<String, Integer> products = generateProducts(5);
+        return new Object[][] { { products } };
     }
+
+
+    @DataProvider(name = "generatedEmptyProducts")
+    public Object[][] dataProvider() {
+        Map<String, Integer> products = new HashMap<>();
+        return new Object[][] { { products } };
+    }
+
 
 
     @DataProvider(name = "SearchValues")
