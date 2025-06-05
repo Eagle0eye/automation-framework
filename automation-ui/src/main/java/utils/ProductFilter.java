@@ -5,12 +5,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pages.cores.ProductsPage;
 import utils.enums.BRAND;
 import utils.enums.CATEGORY;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +23,11 @@ public class ProductFilter {
     private List<ProductInfo> productInfos;
     private final WebDriver driver;
     private final Actions actions;
-
+    private final WebDriverWait wait;
     public ProductFilter(WebDriver driver)
     {
         this.driver = driver;
+        wait =  new WebDriverWait(driver, Duration.ofSeconds(10));
         actions = new Actions(driver);
         productInfos = new ArrayList<>();
     }
@@ -66,23 +70,29 @@ public class ProductFilter {
 
     /*
     Search about products by:
-    - search(text)
     - search(CATEGORY)
     - search(BRAND)
      */
-    public ProductsPage search(String text)
-    {
-        return new ProductsPage(driver);    }
 
     public ProductsPage search(CATEGORY category) {
-        WebElement selectedCategory = driver.findElement(By.id(category.getMainCategory().toString()));
-        selectedCategory.findElement(By.id(category.toString())).click();
+        String womenMain = "//a[@href='#%s' and normalize-space()='%s']".formatted(category.getMainCategory(), category.getMainCategory());
+        WebElement categoryElement = driver.findElement(By.xpath(womenMain));
+        categoryElement.click();
+        String womenTops = "//div[@id='%s']//a[normalize-space()='%s']".formatted(category.getMainCategory(),category.getText());
+        WebElement topsElement = driver.findElement(By.xpath(womenTops));
+        topsElement.click();
         return new ProductsPage(driver);
     }
 
+
     public ProductsPage search(BRAND brand) {
-        WebElement selectedBrand = driver.findElement(By.id(brand.toString()));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebElement selectedBrand = wait.until(ExpectedConditions.elementToBeClickable(
+                By.xpath("//div[@class='brands_products']//a[contains(.,'" + brand.toString() + "')]")
+        ));
         selectedBrand.click();
+
         return new ProductsPage(driver);
     }
+
 }

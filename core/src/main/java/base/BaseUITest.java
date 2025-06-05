@@ -24,7 +24,8 @@ public class BaseUITest {
     @AfterSuite
     public void teardown() {
         if (driver != null) {
-            System.out.println("<UNK> <UNK> <UNK>");
-        }
+            System.out.println("Finished Test");
+            driver.quit();
+            }
     }
 }
