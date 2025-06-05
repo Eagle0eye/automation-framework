@@ -14,6 +14,7 @@ import utils.enums.CATEGORY;
 
 import java.util.Map;
 
+import static util.ProductsGenerator.loadProducts;
 
 
 public class TestCurrentDev  extends BaseUITest {
@@ -25,17 +26,14 @@ public class TestCurrentDev  extends BaseUITest {
     @BeforeTest
     public void setUp() {
         softAssert = new SoftAssert();
-//        loadProducts();
+        loadProducts();
     }
 
     @Test(dataProvider = "generatedProducts", dataProviderClass = ProductProvider.class)
     public void testCurrentDev(Map<String, Integer> products) {
         homePage = new HomePage(driver);
         homePage.open();
-        productFilter = homePage.order().filter();
-        productFilter.search(BRAND.H_M);
-        productFilter.search(BRAND.BABYHUG);
-        productFilter.search(CATEGORY.KIDS_DRESS);
+        homePage.order().addToCart(products);
 
     }
 

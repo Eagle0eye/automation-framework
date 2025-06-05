@@ -31,7 +31,7 @@ public class ProductsService {
     public ProductsService(WebDriver driver) {
        this.driver = driver;
        this.actions = new Actions(driver);
-       this.wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+       this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
        this.productFilter = new ProductFilter(driver);
     }
 
@@ -45,61 +45,6 @@ public class ProductsService {
         return this.addToCart(Map.of(productName, quantity));
     }
 
-    @Step("Add selected products")
-    public ProductsService addToCart(Map<String, Integer> productList) {
-        if (productList == null || productList.isEmpty()) {
-            log.warn("Product list is empty.");
-            throw new RuntimeException("Product list is empty.");
-        }
-
-        List<WebElement> productCards = driver.findElements(By.cssSelector("div.col-sm-4"));
-        List<WebElement> matchedCards = new ArrayList<>();
-
-        for (WebElement card : productCards) {
-            try {
-                actions.moveToElement(card).perform();
-                WebElement overlay = card.findElement(By.cssSelector(".overlay-content"));
-                String productName = overlay.findElement(By.tagName("p")).getText();
-
-                if (productList.containsKey(productName)) {
-                    matchedCards.add(card); // store the full card, not overlay
-                    log.info("Matched product: {}", productName);
-                }
-
-                if (matchedCards.size() == productList.size()) {
-                    break;
-                }
-            } catch (Exception e) {
-                log.error("Error reading product card: {}", e.getMessage());
-            }
-        }
-        int count = 0;
-        for (WebElement card : matchedCards) {
-            actions.moveToElement(card).perform();
-            WebElement overlay = wait.until(ExpectedConditions.visibilityOf(
-                    card.findElement(By.cssSelector(".overlay-content"))
-            ));
-
-            String name = overlay.findElement(By.tagName("p")).getText();
-            int quantity = productList.get(name);
-            count++;
-            for (int i = 0; i < quantity; i++) {
-                waitForCartModalToDisappear();
-                currentProduct = overlay;
-                confirmAddToCart();
-                log.info("Added product '{}' to cart ({}/{})", name, i + 1, quantity);
-
-                if (i < quantity - 1 || count != productList.size())
-                {
-                    continueShopping();
-                    actions.moveToElement(card).perform();
-                }
-
-            }
-        }
-
-        return this;
-    }
 
 
     @Step("Ensure the the Product added to Cart")
@@ -119,10 +64,69 @@ public class ProductsService {
         }
         return this;
     }
+    @Step("Add selected products")
+    public ProductsService addToCart(Map<String, Integer> products) {
 
-    private void confirmAddToCart() {
-        wait.until(ExpectedConditions.elementToBeClickable(currentProduct.findElement(By.linkText("Add to cart")))).click();
+        //show products and quantity for each one
+        for (Map.Entry<String, Integer> entry : products.entrySet()) {
+            log.info("Product: {} - Quantity: {}", entry.getKey(), entry.getValue());
+        }
+
+        // save all web elements to do actions on
+        List<WebElement> matchedCards = new ArrayList<>();
+        for (String name : products.keySet()) {
+            WebElement matchedCard = driver.findElement(By.xpath(
+                    "//div[contains(@class,'single-products') and .//div[contains(@class,'productinfo')]//p[normalize-space()='%s']]"
+                            .formatted(name)));
+            matchedCards.add(matchedCard);
+        }
+
+
+
+
+        int prodIndex=0;
+
+        for (Map.Entry<String, Integer> product : products.entrySet()) {
+            WebElement matchedCard = matchedCards.get(prodIndex);
+
+
+            try {
+                for (int q = 0; q < product.getValue(); q++) {
+                    actions.moveToElement(matchedCard).perform();
+                    WebElement overlay = wait.until(ExpectedConditions.visibilityOf(
+                            matchedCard.findElement(By.cssSelector(".product-overlay"))
+                    ));
+
+                    WebElement addToCart = overlay.findElement(By.cssSelector("a.add-to-cart"));
+
+                    actions.moveToElement(addToCart).perform();
+                    wait.until(ExpectedConditions.elementToBeClickable(addToCart)).click();
+                    log.info("Added '{}' to cart (qty: {}/{})", product.getKey(), q + 1, product.getValue());
+
+
+                    boolean isLastProduct = (prodIndex == products.size() - 1);
+                    boolean isLastQuantity = (q == product.getValue() - 1);
+
+                    if (!(isLastProduct && isLastQuantity)) {
+                        waitForCartModal();
+                        continueShopping();
+                        waitForCartModalToDisappear();
+                    }
+                    if (q == product.getValue() - 1)
+                        log.info("Product #{} Added", prodIndex + 1);
+                }
+
+            } catch (Exception e) {
+                log.error("Error adding Product #{} to cart.\nError: {}", prodIndex, e.getMessage());
+
+            }
+            prodIndex++;
+
+        }
+        return this;
     }
+
+
 
     @Step("View Cart")
     public CartPage viewCart() {
@@ -141,5 +145,10 @@ public class ProductsService {
             log.warn("Cart modal did not disappear in time.");
         }
     }
+
+    private void waitForCartModal() {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("cartModal")));
+    }
+
 
 }

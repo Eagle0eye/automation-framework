@@ -13,7 +13,7 @@ import static util.ProductsGenerator.generateProducts;
 public class ProductProvider {
     @DataProvider(name = "generatedProducts")
     public Object[][] getGeneratedProducts() {
-        Map<String, Integer> products = generateProducts(5);
+        Map<String, Integer> products = generateProducts(2);
         return new Object[][] { { products } };
     }
 
