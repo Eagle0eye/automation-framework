@@ -1,5 +1,7 @@
 package services;
 
+import Cache.Cache;
+import Cache.DTO.ProductCache;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -10,15 +12,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pages.cores.CartPage;
+import pages.cores.ProductPage;
 import utils.ProductFilter;
 
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
+
+import static Cache.CacheService.getSavedProducts;
 
 
-public class ProductsService {
+public class ProductsService implements IProductService {
 
     // Initialization
     private static final Logger log = LoggerFactory.getLogger(ProductsService.class);
@@ -137,6 +141,21 @@ public class ProductsService {
         return new CartPage(driver);
     }
 
+    @Override
+    public ProductPage viewProduct() {
+        List<ProductCache> cached = getSavedProducts().stream().toList();
+        Random random = new Random();
+        ProductCache productCache =  cached.get(random.nextInt(cached.size()));
+        gotoProductPage(productCache.getProductName());
+        return new ProductPage(driver);
+    }
+
+    @Override
+    public ProductPage viewProduct(String productName) {
+        gotoProductPage(productName);
+        return new ProductPage(driver);
+    }
+
 
     private void waitForCartModalToDisappear() {
         try {
@@ -151,4 +170,9 @@ public class ProductsService {
     }
 
 
+    private void gotoProductPage(String productName) {
+        String xpath = "//p[normalize-space(text())='" + productName + "']/ancestor::div[contains(@class,'product-image-wrapper')]//a[contains(@href,'/product_details')]";
+        WebElement productLink = driver.findElement(By.xpath(xpath));
+        productLink.click();
+    }
 }
