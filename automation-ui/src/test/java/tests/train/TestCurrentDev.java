@@ -34,7 +34,7 @@ public class TestCurrentDev  extends BaseUITest {
     public void testCurrentDev(Map<String, Integer> products) {
         homePage = new HomePage(driver);
         homePage.open();
-        homePage.selectRandomItems().gotoCartPage();
+        homePage.Header().gotoCartPage();
         //        ReviewProduct review = ReviewProduct.builder().email("A@aa").name("Yousef").message("22222").build();
 //        String actual =  homePage.order().viewProduct().setQuantity(3).writeYourReview(review).ensureReviewSuccess();
 //        String expected = "Thank you for your review.";
