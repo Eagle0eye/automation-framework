@@ -17,7 +17,7 @@ public class RegisterRepository {
 
     public RegisterRepository(){
         MongoDatabase database = MongoDBClient.getDatabase();
-        collection = database.getCollection(COLLECTION);
+        collection = database != null ? database.getCollection(COLLECTION) : null;
     }
 
     public void insertUser(Register user) {

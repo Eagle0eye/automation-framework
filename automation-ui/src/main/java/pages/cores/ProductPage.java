@@ -1,6 +1,7 @@
 package pages.cores;
 
 import DTO.ReviewProduct;
+import lombok.SneakyThrows;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,6 +9,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.BasePage;
 
 import pages.interfaces.IProductPage;
+
+import java.time.Duration;
 
 
 public class ProductPage extends BasePage implements IProductPage {
@@ -62,19 +65,20 @@ public class ProductPage extends BasePage implements IProductPage {
         WebElement continueButton = wait
                 .until(ExpectedConditions
                 .visibilityOfElementLocated(
-                        By.xpath("//button[contains(text(), 'Continue Shopping')]")
+                        By.xpath("//button[@class='btn btn-success close-modal btn-block']")
                 )
                 );
         continueButton.click();
         return this;
     }
 
+    @SneakyThrows
     @Override
     public CartPage viewCart() {
         WebElement viewCartButton = wait
                 .until(ExpectedConditions
                 .visibilityOfElementLocated(
-                        By.xpath("//a[@href='/view_cart']")
+                        By.xpath("//a[@href='/view_cart']\n")
                 )
                 );
         viewCartButton.click();

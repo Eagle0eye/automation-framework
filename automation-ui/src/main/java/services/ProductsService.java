@@ -157,6 +157,7 @@ public class ProductsService implements IProductService {
     }
 
 
+    // helper functions
     private void waitForCartModalToDisappear() {
         try {
             wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("cartModal")));
@@ -175,4 +176,5 @@ public class ProductsService implements IProductService {
         WebElement productLink = driver.findElement(By.xpath(xpath));
         productLink.click();
     }
+
 }
