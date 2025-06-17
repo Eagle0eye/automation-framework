@@ -6,12 +6,12 @@
 
     <test name="Test">
         <classes>
-            <class name="tests.account.add.InvalidRegistrationTest"></class>
+            <class name="tests.account.add.Registration_InvalidTest"></class>
         </classes>
     </test>
         <test name="Account Tests">
         <packages>
-            <package name="tests.account.login"/>
+            <package name="tests.account.tests.login"/>
             <package name="tests.account.update"/>
             <package name="tests.account.view"/>
             <package name="tests.account.add"/>

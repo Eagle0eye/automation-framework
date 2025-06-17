@@ -1,21 +1,22 @@
 package util;
 
 import java.time.LocalDate;
-
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 public class RandomDateGenerator {
+    private static final int MIN_YEAR = 1900;
+    private static final int MAX_YEAR = 2021;
+    private static final Random random = new Random();
 
-    private static final int MIN_YEAR = 1995;
-    private static final int MAX_YEAR = 2025;
+    public static LocalDate generateRandomDateWithStaticYear() {
+        int year = getRandomInRange(MIN_YEAR, MAX_YEAR);
+        int month = getRandomInRange(1, 12); // Months 1-12
+        int day = getRandomInRange(1, LocalDate.of(year, month, 1).lengthOfMonth());
 
-    public static LocalDate generateRandomDateWithStaticYear()
-    {
-        int randomYear = ThreadLocalRandom.current().nextInt(MIN_YEAR, MAX_YEAR + 1);
-        LocalDate start = LocalDate.of(randomYear, 1, 1);
-        LocalDate end = LocalDate.of(randomYear, 12, 31);
-        long days = end.toEpochDay() - start.toEpochDay();
-        long randomDays = ThreadLocalRandom.current().nextLong(days + 1);
-        return start.plusDays(randomDays);
+        return LocalDate.of(year, month, day);
+    }
+
+    private static int getRandomInRange(int min, int max) {
+        return random.nextInt(max - min + 1) + min;
     }
 }

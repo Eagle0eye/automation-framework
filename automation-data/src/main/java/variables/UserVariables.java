@@ -11,16 +11,11 @@ public class UserVariables {
     private static final Faker faker = new Faker();
     private static final RandomValue<String> values = new RandomValue<>(Arrays.asList("India","Canada","Australia","United States","Singapore","New Zealand"));
     private static final RandomValue<String> titles = new RandomValue<>(Arrays.asList("Mrs","Mr"));
-    private static LocalDate randomDate = RandomDateGenerator.generateRandomDateWithStaticYear();
 
     public static String title = titles.getRandomValue();
     public static String register_name = faker.name().name();
-    public static String register_email =faker.internet().emailAddress();
     public static String register_password = "auto12345678";
 
-    public static int day = randomDate.getDayOfMonth();
-    public static int month = randomDate.getMonthValue();
-    public static int year = randomDate.getYear();
 
     public static String firstName = faker.name().firstName();
     public static String lastName = faker.name().lastName();

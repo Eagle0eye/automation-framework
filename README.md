@@ -27,14 +27,14 @@ This project is a **modular, extensible, and data-driven test automation framewo
 * Uses Rest Assured for HTTP operations.
 * JSON Schema validation in `/resources/schemas`.
 * Tests: `ValidLoginTest`, `InvalidRegistrationTest`, `GetAccountInfoTest`, etc.
-* Schema Validation: `brands-schema.json`, `login-response-schema.json`.
+* Schema Validation: `brands-schema.json`, `tests.login-response-schema.json`.
 
 ### ✅ `automation-ui`
 
 * UI test cases using Selenium and Page Object Model.
-* Pages structured under `pages.cores` and `pages.validators`.
+* Pages structured under `pages.testcases` and `pages.validations`.
 * Locator abstraction using DTOs and JSON files.
-* Tests cover register, login, and interaction flows.
+* Tests cover register, tests.login, and interaction flows.
 
 ### ✅ `automation-data`
 
@@ -151,7 +151,7 @@ Allure results are automatically cleaned and generated per module run.
 
 ## 🔐 Authentication (optional)
 
-* JWT token is stored globally after successful login.
+* JWT token is stored globally after successful tests.login.
 * Reused automatically across authenticated tests.
 
 ---

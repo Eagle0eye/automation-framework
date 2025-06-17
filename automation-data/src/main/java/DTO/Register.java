@@ -11,7 +11,7 @@ public class Register {
     private int day, month, year;
 
     private String firstname, lastname;
-
+    private boolean isNewsletter,isSpecialOffers;
     private String company,address, address2;
 
     private String country, state, city, zipcode, phone;
