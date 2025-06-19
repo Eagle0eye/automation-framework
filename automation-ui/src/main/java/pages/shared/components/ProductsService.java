@@ -1,6 +1,6 @@
 package pages.shared.components;
 
-import Cache.DTO.ProductCache;
+import models.ProductCache;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -16,7 +16,7 @@ import pages.products.ProductPage;
 import java.time.Duration;
 import java.util.*;
 
-import static Cache.CacheService.getSavedProducts;
+import static services.CartService.getCartItems;
 
 
 public class ProductsService  {
@@ -131,7 +131,7 @@ public class ProductsService  {
     }
 
     public ProductPage viewProduct() {
-        List<ProductCache> cached = getSavedProducts().stream().toList();
+        List<ProductCache> cached = getCartItems().stream().toList();
         Random random = new Random();
         ProductCache productCache =  cached.get(random.nextInt(cached.size()));
         gotoProductPage(productCache.getProductName());

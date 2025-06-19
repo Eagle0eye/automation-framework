@@ -1,7 +1,6 @@
 package pages.cart;
 
-import Cache.CacheService;
-import Cache.DTO.ProductCache;
+import models.ProductCache;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,7 +11,8 @@ import pages.products.ProductPage;
 import java.util.List;
 import java.util.Map;
 
-import static Cache.CacheService.removeProductCache;
+import static services.CartService.getCartItems;
+import static services.CartService.removeFromCart;
 
 public class CartPage extends BasePage  {
 
@@ -89,7 +89,7 @@ public class CartPage extends BasePage  {
 
                 WebElement deleteButton = row.findElement(By.cssSelector(".cart_quantity_delete"));
                 deleteButton.click();
-                removeProductCache(uiProduct.getProductName());
+                removeFromCart(uiProduct.getProductName());
                 log.info("Removed product '{}' from UI and cache", uiProduct.getProductName());
                 break;
             }
@@ -104,7 +104,7 @@ public class CartPage extends BasePage  {
     }
 
     private boolean verifyProductMatchesCache(String productName, int uiQuantity, int uiTotalPrice) {
-        for (ProductCache cached : CacheService.getSavedProducts()) {
+        for (ProductCache cached : getCartItems()) {
             if (cached.getProductName().equalsIgnoreCase(productName)) {
                 return cached.getQuantity() == uiQuantity && (cached.getPrice() * cached.getQuantity()) == uiTotalPrice;
             }

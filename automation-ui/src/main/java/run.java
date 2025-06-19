@@ -1,5 +1,5 @@
-import Cache.DTO.ProductCache;
-import Cache.Cache;
+import models.ProductCache;
+import repository.CacheRepository;
 
 import java.util.Set;
 
@@ -19,7 +19,7 @@ public class run {
             loadProducts();
             generateProducts(5);
             int sum = 0;
-            Set<ProductCache> productCache = (Set<ProductCache>) Cache.get("ordered-products");
+            Set<ProductCache> productCache = (Set<ProductCache>) CacheRepository.get("ordered-products");
             for (ProductCache productCache1 : productCache) {
                 System.out.println(productCache1.getProductName() + " total price = " + productCache1.getPrice() * productCache1.getQuantity());
                 sum += productCache1.getPrice() * productCache1.getQuantity();

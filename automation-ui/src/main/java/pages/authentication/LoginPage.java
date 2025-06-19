@@ -1,6 +1,6 @@
 package pages.authentication;
 
-import Cache.DTO.UserInfo;
+import models.UserInfo;
 import DTO.Login;
 import DTO.Register;
 import org.openqa.selenium.By;
@@ -8,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pages.shared.components.BasePage;
 import pages.shared.validations.ValidLoginPage;
-import Cache.Cache;
+import repository.CacheRepository;
 
 public class LoginPage extends BasePage {
     public LoginPage(WebDriver driver) {
@@ -29,7 +29,7 @@ public class LoginPage extends BasePage {
         loginButton.click();
 
         log.info("login via credentials => email: {} password: {}",form.getEmail() ,form.getPassword());
-        Cache.put("test-account", UserInfo.builder().email(form.getEmail()).password(form.getPassword()).build());
+        CacheRepository.put("test-account", UserInfo.builder().email(form.getEmail()).password(form.getPassword()).build());
         return new ValidLoginPage(driver);
     }
 

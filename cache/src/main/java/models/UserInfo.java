@@ -1,4 +1,4 @@
-package Cache.DTO;
+package models;
 
 import lombok.Builder;
 import lombok.Data;

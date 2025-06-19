@@ -56,6 +56,11 @@
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.eagle0eye</groupId>
+            <artifactId>cache</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         </dependencies>
     <dependencyManagement>
         <dependencies>

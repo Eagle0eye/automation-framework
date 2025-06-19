@@ -1,14 +1,14 @@
     package pages.shared.validations;
 
 
-    import Cache.DTO.UserInfo;
+    import models.UserInfo;
     import mongo.AuthRepository;
     import org.bson.Document;
     import org.openqa.selenium.By;
     import org.openqa.selenium.WebDriver;
     import org.openqa.selenium.WebElement;
     import pages.shared.components.BasePage;
-    import Cache.Cache;
+    import repository.CacheRepository;
     import pages.shared.components.Header;
 
 
@@ -26,10 +26,10 @@
             String text = success_login.getText();
             if (text.startsWith("Logged in as")) {
                 log.info("Verify correct login successful as {}.", text.substring(12).strip());
-                UserInfo userInfo = (UserInfo) Cache.get("test-account");
+                UserInfo userInfo = (UserInfo) CacheRepository.get("test-account");
                 Document foundUser = repository.getUserByEmail(userInfo.getEmail());
                 UserInfo updatedInfo = mapDocumentToUser(userInfo,foundUser);
-                Cache.put("test-account", updatedInfo);
+                CacheRepository.put("test-account", updatedInfo);
             }
             return new Header();
         }

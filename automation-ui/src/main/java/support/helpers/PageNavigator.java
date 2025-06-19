@@ -1,6 +1,6 @@
 package support.helpers;
 
-import Cache.Cache;
+import repository.CacheRepository;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -119,7 +119,7 @@ public class PageNavigator {
     public void Logout() {
         WebElement logoutLink = driver.findElement(By.linkText("Logout"));
         logoutLink.click();
-        Cache.clear();
+        CacheRepository.clear();
         log.info("Logout");
     }
 }

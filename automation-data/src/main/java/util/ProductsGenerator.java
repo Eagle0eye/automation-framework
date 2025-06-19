@@ -1,7 +1,7 @@
 package util;
 
-import Cache.DTO.ProductCache;
 import DTO.ProductInfo;
+import models.ProductCache;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.*;
 
-import static Cache.CacheService.addProductCache;
+import static services.CartService.addToCart;
 import static variables.ProductVariables.ALL_PRODUCTS;
 
 public class ProductsGenerator {
@@ -65,7 +65,7 @@ public class ProductsGenerator {
 
             savedProducts.put(product.getName(), quantity);
 
-            addProductCache(ProductCache.builder()
+            addToCart(ProductCache.builder()
                     .productName(product.getName())
                     .price(product.getPrice())
                     .quantity(quantity)

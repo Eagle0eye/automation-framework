@@ -61,6 +61,12 @@
             <scope>provided</scope>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.eagle0eye</groupId>
+            <artifactId>cache</artifactId>
+            <version>${project.version}</version>
+
+        </dependency>
 
 
     </dependencies>
