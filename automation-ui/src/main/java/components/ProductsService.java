@@ -1,4 +1,4 @@
-package pages.shared.components;
+package components;
 
 import models.ProductCache;
 import io.qameta.allure.Step;
@@ -12,12 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import pages.cart.CartPage;
 import pages.products.ProductPage;
+import services.CartServiceImpl;
 
 import java.time.Duration;
 import java.util.*;
-
-import static services.CartService.getCartItems;
-
 
 public class ProductsService  {
 
@@ -26,11 +24,14 @@ public class ProductsService  {
     private final WebDriver driver;
     private final Actions actions;
     private final WebDriverWait wait;
+    private final CartServiceImpl cartService;
+
 
     public ProductsService(WebDriver driver) {
        this.driver = driver;
        this.actions = new Actions(driver);
        this.wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+       cartService = new CartServiceImpl();
     }
 
     @Step("Add Product to Cart")
@@ -44,7 +45,7 @@ public class ProductsService  {
     public boolean verifyAddMessage() {
         WebElement verifyAddMessage = driver.findElement(By.cssSelector("#cartModal > div > div > div.modal-body > p:nth-child(1)"));
         wait.until(ExpectedConditions.visibilityOf(verifyAddMessage));
-        return verifyAddMessage.isDisplayed() && verifyAddMessage.getText().contentEquals("Your product has been added to tests.cart.");
+        return verifyAddMessage.isDisplayed() && verifyAddMessage.getText().contentEquals("Your product has been added to Cart.");
     }
 
     @Step("Continue Shopping")
@@ -57,6 +58,7 @@ public class ProductsService  {
         }
         return this;
     }
+
     @Step("Add selected products")
     public ProductsService addToCart(Map<String, Integer> products) {
 
@@ -73,10 +75,6 @@ public class ProductsService  {
                             .formatted(name)));
             matchedCards.add(matchedCard);
         }
-
-
-
-
         int prodIndex=0;
 
         for (Map.Entry<String, Integer> product : products.entrySet()) {
@@ -131,7 +129,7 @@ public class ProductsService  {
     }
 
     public ProductPage viewProduct() {
-        List<ProductCache> cached = getCartItems().stream().toList();
+        List<ProductCache> cached = cartService.viewCartItems().stream().toList();
         Random random = new Random();
         ProductCache productCache =  cached.get(random.nextInt(cached.size()));
         gotoProductPage(productCache.getProductName());

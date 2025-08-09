@@ -1,12 +1,12 @@
 package pages.orders;
 
 import DTO.Payment;
+import components.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import pages.shared.components.BasePage;
+import validators.ValidOrderPage;
 
-import pages.shared.validations.ValidOrderPage;
 
 public class PaymentPage extends BasePage {
     public PaymentPage(WebDriver driver) {
@@ -23,27 +23,27 @@ public class PaymentPage extends BasePage {
     public PaymentPage fillPaymentForm(Payment form) {
         String cardName_xpath = "//input[@name='name_on_card']";
         String cardNumber_xpath = "//input[@name='card_number']";
-        String cvc_xpath = "//input[@name='cvc']";
+        String cvc_xpath = "//input[@name='cvcField']";
         String expiredMonth_xpath = "//input[@name='expiry_month']";
         String expiredYear_xpath = "//input[@name='expiry_year']";
 
-        WebElement cardName = driver.findElement(By.xpath(cardName_xpath));
-        WebElement cardNumber = driver.findElement(By.xpath(cardNumber_xpath));
-        WebElement cvc = driver.findElement(By.xpath(cvc_xpath));
-        WebElement expiredMonth = driver.findElement(By.xpath(expiredMonth_xpath));
-        WebElement expiredYear = driver.findElement(By.xpath(expiredYear_xpath));
+        WebElement cardNameField = driver.findElement(By.xpath(cardName_xpath));
+        WebElement cardNumberField = driver.findElement(By.xpath(cardNumber_xpath));
+        WebElement cvcField = driver.findElement(By.xpath(cvc_xpath));
+        WebElement expiredMonthField = driver.findElement(By.xpath(expiredMonth_xpath));
+        WebElement expiredYearField = driver.findElement(By.xpath(expiredYear_xpath));
 
-        cardName.clear();
-        cardNumber.clear();
-        cvc.clear();
-        expiredMonth.clear();
-        expiredYear.clear();
+        cardNameField.clear();
+        cardNumberField.clear();
+        cvcField.clear();
+        expiredMonthField.clear();
+        expiredYearField.clear();
 
-        cardName.sendKeys(form.getCardName());
-        cardNumber.sendKeys(form.getCardNumber());
-        cvc.sendKeys(form.getCvc());
-        expiredMonth.sendKeys(form.getMonth());
-        expiredYear.sendKeys(form.getYear());
+        cardNameField.sendKeys(form.getCardName());
+        cardNumberField.sendKeys(form.getCardNumber());
+        cvcField.sendKeys(form.getCvc());
+        expiredMonthField.sendKeys(form.getMonth());
+        expiredYearField.sendKeys(form.getYear());
 
         return this;
     }

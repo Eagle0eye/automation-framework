@@ -1,9 +1,6 @@
 package variables;
 
-import DTO.ProductInfo;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ProductVariables {
@@ -14,5 +11,6 @@ public class ProductVariables {
             "tshirt", 6
     );
 
-    public static List<ProductInfo> ALL_PRODUCTS = new ArrayList<>();
+    public static Map<String,Integer> ALL_PRODUCTS = new HashMap<>();
+    public static Map<String,Integer> RECOMMENDED_PRODUCTS = new HashMap<>();
 }

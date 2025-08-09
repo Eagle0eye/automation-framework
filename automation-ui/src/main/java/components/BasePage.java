@@ -1,4 +1,4 @@
-package pages.shared.components;
+package components;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.support.PageFactory;
@@ -6,7 +6,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import support.helpers.PageNavigator;
 
 
 import java.time.Duration;
@@ -38,9 +37,9 @@ public class BasePage  {
         return new Header();
     }
 
-    public Footer Footer() {
-        return new Footer(driver);
-    }
+    public Scrolling scroll(){  return new Scrolling(driver);  }
+
+    public Footer Footer() {  return new Footer(driver);  }
 
 
 }

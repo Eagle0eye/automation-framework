@@ -1,19 +1,24 @@
 package pages.authentication;
 
 import DTO.Register;
+import models.UserInfo;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import pages.shared.components.BasePage;
-import pages.shared.validations.ValidationPage;
+import components.BasePage;
+import services.UserProfileServiceImpl;
+import validators.ValidationPage;
 
 import java.time.Duration;
 
+import static mapper.UserMapper.mapRegisterToUserInfo;
+
 public class RegisterPage extends BasePage {
 
+    private final UserProfileServiceImpl userService;
     // XPath locators
     private static final String GENDER_MALE_XPATH = "//input[@id='id_gender1']";
     private static final String NAME_XPATH = "//input[@id='name']";
@@ -35,8 +40,10 @@ public class RegisterPage extends BasePage {
     private static final String MOBILE_NUMBER_XPATH = "//input[@id='mobile_number']";
     private static final String SUBMIT_XPATH = "//button[contains(@class, 'btn') and contains(text(), 'Create Account')]";
 
+    private UserInfo registeredData = null;
     public RegisterPage(WebDriver driver) {
         super(driver);
+        userService = new UserProfileServiceImpl();
     }
 
     public RegisterPage fillAllRegisterForm(Register form) {
@@ -53,17 +60,17 @@ public class RegisterPage extends BasePage {
         typeText(By.xpath(COMPANY_XPATH), form.getCompany());
 
         typeText(By.xpath(ADDRESS2_XPATH), form.getAddress2());
-
-
+        registeredData = mapRegisterToUserInfo(form);
         return this;
     }
     public ValidationPage submit() {
         clickElement(By.xpath(SUBMIT_XPATH));
+        userService.login(registeredData.getEmail(), registeredData.toString());
         return new ValidationPage(driver);
     }
 
 
-    public String verifyRegisterErrorMessage() {
+    public String verifyRegisterErrorMessage() { 
         String ERROR_XPATH = "//p[contains(text(), 'Email Address already exist!')]";
         WebElement errorMessage = driver.findElement(By.xpath(ERROR_XPATH));
         String message = errorMessage.getText();

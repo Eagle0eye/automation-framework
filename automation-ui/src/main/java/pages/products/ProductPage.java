@@ -1,16 +1,15 @@
 package pages.products;
 
 import DTO.ReviewProduct;
-import lombok.SneakyThrows;
+import components.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import pages.shared.components.BasePage;
 import pages.cart.CartPage;
 
 
-public class ProductPage extends BasePage  {
+public class ProductPage extends BasePage {
 
     public ProductPage(WebDriver driver) {
         super(driver);
@@ -33,12 +32,11 @@ public class ProductPage extends BasePage  {
         WebElement emailElement = driver.findElement(By.xpath("//form[@id='review-form']//input[@id='email']"));
         WebElement messageElement = driver.findElement(By.xpath("//form[@id='review-form']//textarea[@id='review']"));
         WebElement submitButton = driver.findElement(By.xpath("//form[@id='review-form']//button[@id='button-review']"));
-        // Ensure Clear all Fields
+
         nameElement.clear();
         emailElement.clear();
         messageElement.clear();
 
-        // send Values
         nameElement.sendKeys(form.getName());
         emailElement.sendKeys(form.getEmail());
         messageElement.sendKeys(form.getMessage());
@@ -66,7 +64,6 @@ public class ProductPage extends BasePage  {
         return this;
     }
 
-    @SneakyThrows
     public CartPage viewCart() {
         WebElement viewCartButton = wait
                 .until(ExpectedConditions

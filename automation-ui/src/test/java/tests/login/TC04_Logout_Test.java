@@ -4,7 +4,7 @@ import DTO.Login;
 import base.BaseUITest;
 import org.testng.annotations.Test;
 import pages.HomePage;
-import pages.shared.components.Header;
+import components.Header;
 import provider.AuthProvider;
 
 import static base.DRIVERS.EDGE;

@@ -9,7 +9,7 @@
 
     <groupId>com.eagle0eye</groupId>
     <artifactId>automation-framework</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${project.version}</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -21,6 +21,8 @@
     </modules>
 
     <properties>
+        <project.version>1.0-SNAPSHOT</project.version>
+
         <jsoup.version>1.19.1</jsoup.version>
 
         <maven.compiler.source>23</maven.compiler.source>
@@ -30,7 +32,7 @@
         <allure.version>2.29.1</allure.version>
         <restassured.version>5.5.1</restassured.version>
         <testng.version>7.11.0</testng.version>
-        <selenium.version>4.31.0</selenium.version>
+        <selenium.version>4.23.0</selenium.version>
         <jackson.version>2.18.3</jackson.version>
         <lombok.version>1.18.36</lombok.version>
         <mongodb.version>5.4.0</mongodb.version>
@@ -41,7 +43,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <!-- Central dependency versions -->
             <dependency>
                 <groupId>io.rest-assured</groupId>
                 <artifactId>rest-assured</artifactId>
@@ -85,22 +86,26 @@
                 <artifactId>mongodb-driver-sync</artifactId>
                 <version>${mongodb.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>org.mongodb</groupId>
                 <artifactId>bson</artifactId>
                 <version>${mongodb.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-testng</artifactId>
                 <version>${allure.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-rest-assured</artifactId>
                 <version>${allure.version}</version>
                 <scope>test</scope>
             </dependency>
+
             <dependency>
                 <groupId>com.github.javafaker</groupId>
                 <artifactId>javafaker</artifactId>
@@ -132,18 +137,23 @@
             <artifactId>json-schema-validator</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-testng</artifactId>
+            <version>${allure.version}</version>
         </dependency>
+
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-rest-assured</artifactId>
+            <version>${allure.version}</version>
         </dependency>
+
         <dependency>
             <groupId>com.eagle0eye</groupId>
             <artifactId>core</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
 

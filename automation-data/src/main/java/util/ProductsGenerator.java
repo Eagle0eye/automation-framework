@@ -1,80 +1,104 @@
 package util;
 
 import DTO.ProductInfo;
-import models.ProductCache;
+
+import org.checkerframework.checker.units.qual.A;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import services.CartServiceImpl;
 
 import java.io.IOException;
 import java.util.*;
 
-import static services.CartService.addToCart;
-import static variables.ProductVariables.ALL_PRODUCTS;
+import static variables.ProductVariables.*;
 
 public class ProductsGenerator {
     private static final Logger log = LoggerFactory.getLogger(ProductsGenerator.class);
+    private static final CartServiceImpl cartService = new CartServiceImpl();
 
     public static void loadProducts() {
         ALL_PRODUCTS.clear();
+        RECOMMENDED_PRODUCTS.clear();
         log.info("Loading products.....");
         try {
             String url = "https://automationexercise.com";
             Document doc = Jsoup.connect(url).get();
-            Elements elements = doc.select(".overlay-content > h2, .overlay-content > p");
 
-            for (int i = 0; i < elements.size() - 1; i += 2) {
-                String priceText = elements.get(i).text();
-                String name = elements.get(i + 1).text();
+            loadAllProducts(doc);
+            loadRecommendedProducts(doc);
 
-                int price = Integer.parseInt(priceText.replaceAll("[^0-9]", ""));
-                ALL_PRODUCTS.add(ProductInfo.builder().name(name).price(price).build());
-            }
-        log.info("Downloaded {} products.", ALL_PRODUCTS.size());
+            log.info("Downloaded {} all products and {} recommended products.",
+                    ALL_PRODUCTS.size(), RECOMMENDED_PRODUCTS.size());
+
         } catch (IOException e) {
             System.err.println("Failed to load product data: " + e.getMessage());
         }
     }
+    public static Set<ProductInfo> generateProducts(int count) {
+        return selectProducts(count, ALL_PRODUCTS);
+    }
 
-    public static Map<String, Integer> generateProducts(int count) {
-        List<ProductInfo> products = ALL_PRODUCTS;
-        Map<String, Integer> savedProducts = new HashMap<>();
+    public static Set<ProductInfo> generateRecommendedProducts(int count) {
+        return selectProducts(count, RECOMMENDED_PRODUCTS);
+    }
 
 
-        Random random = new Random();
-        if (products.isEmpty()) {
-            log.info("No products found");
-            return savedProducts;
+    private static void loadAllProducts(Document doc) {
+        Elements allProductBlocks = doc.select(".product-overlay .overlay-content");
+        log.info("Loading all products.....");
+        loadProducts(allProductBlocks, ALL_PRODUCTS);
+    }
+
+    private static void loadRecommendedProducts(Document doc) {
+        Elements recommendedProductsBlocks = doc.select(".recommended_items .productinfo.text-center");
+        log.info("Loading recommended products.....");
+        loadProducts(recommendedProductsBlocks, RECOMMENDED_PRODUCTS);
+    }
+
+    private static void loadProducts(Elements productBlocks,Map<String,Integer> products) {
+        for (Element product : productBlocks) {
+            String priceText = product.selectFirst("h2").text();
+            String name = product.selectFirst("p").text();
+            int price = parsePrice(priceText);
+            products.put(name, price);
         }
+    }
 
+    private static int parsePrice(String priceText) {
+        return Integer.parseInt(priceText.replaceAll("[^0-9]", ""));
+    }
+
+    private static Set<ProductInfo> selectProducts(int count, Map<String, Integer> products) {
         if (count > products.size()) {
             throw new IllegalArgumentException("Requested more items than available.");
         }
 
+        List<Map.Entry<String, Integer>> productList = new ArrayList<>(products.entrySet());
+        Set<ProductInfo> selectedProducts = new HashSet<>();
+        Random random = new Random();
         Set<Integer> indexSet = new HashSet<>();
+
         while (indexSet.size() < count) {
-            indexSet.add(random.nextInt(products.size()));
+            indexSet.add(random.nextInt(productList.size()));
         }
 
         for (Integer index : indexSet) {
-            ProductInfo product = products.get(index);
-
+            Map.Entry<String, Integer> entry = productList.get(index);
+            String name = entry.getKey();
+            int price = entry.getValue();
             int quantity = random.nextInt(5) + 1;
 
-            savedProducts.put(product.getName(), quantity);
-
-            addToCart(ProductCache.builder()
-                    .productName(product.getName())
-                    .price(product.getPrice())
+            selectedProducts.add(ProductInfo.builder()
+                    .name(name)
+                    .price(price)
                     .quantity(quantity)
                     .build());
-
         }
-
-        return savedProducts;
+        return selectedProducts;
     }
 
 }
-

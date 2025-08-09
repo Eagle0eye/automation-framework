@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.NoSuchElementException;
-import pages.shared.components.BasePage;
+import components.BasePage;
 import support.utils.enums.BRAND;
 import support.utils.enums.CATEGORY;
 
@@ -79,7 +79,7 @@ public class ProductsPage extends BasePage {
     @Step("Verify active search label (category or brand)")
     public String verifyActiveSearch() {
         if (current_category != null) {
-            return (current_category.getMainCategory().name() + " > " + current_category).toLowerCase();
+            return (current_category.getMainCategory()+ " > " + current_category).toLowerCase();
         } else if (current_brand != null) {
             return ("Brand > " + current_brand).toLowerCase();
         } else {

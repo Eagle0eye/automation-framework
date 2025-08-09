@@ -13,36 +13,48 @@ public class AuthProvider {
 
     @DataProvider(name = "deletedAccount")
     public Login[] deleteAccount() {
-        return new Login[]{buildLogin(validEmail,validPassword,NOT_SUPPORTED,NOT_SUPPORTED_MESSAGE)};
+        Login cur = LOGIN;
+        return new Login[]{buildLogin(cur.getEmail(),cur.getPassword(),NOT_SUPPORTED,NOT_SUPPORTED_MESSAGE)
+                .toBuilder()
+                .personalInfo(cur.getPersonalInfo())
+                .build()};
     }
     @DataProvider(name = "loginValidCredentials")
     public static Login[] loginValidData() {
-        return new Login[]{buildLogin(validEmail, validPassword, OK, USER_EXISTS)};
+        Login cur = LOGIN;
+        return new Login[]{buildLogin(cur.getEmail(), cur.getPassword(), OK, USER_EXISTS)
+                .toBuilder()
+                .personalInfo(cur.getPersonalInfo())
+                .build()};
     }
 
     @DataProvider(name = "loginInvalidIncorrectPassword")
     public static Login[] loginInvalidIncorrectPassword() {
-        return new Login[]{buildLogin(validEmail, invalidPassword, NOT_FOUND, USER_NOT_FOUND)};
+
+        return new Login[]{buildLogin(LOGIN.getEmail(), INVALID_PASSWORD, NOT_FOUND, USER_NOT_FOUND)};
     }
 
     @DataProvider(name = "loginInvalidEmptyEmail")
     public static Login[] loginInvalidEmptyEmail() {
-        return new Login[]{buildLogin(null, validPassword, BAD_REQUEST, MISSING_CREDENTIALS)};
+        return new Login[]{buildLogin(null, LOGIN.getPassword(), BAD_REQUEST, MISSING_CREDENTIALS)};
     }
 
     @DataProvider(name = "loginInvalidNotFoundEmail")
     public static Login[] loginInvalidNotFoundEmail() {
-        return new Login[]{buildLogin(invalidEmail, invalidPassword, NOT_FOUND, USER_NOT_FOUND)};
+        return new Login[]{buildLogin(INVALID_EMAIL, INVALID_PASSWORD, NOT_FOUND, USER_NOT_FOUND)};
     }
 
     private static Login buildLogin(String email, String password, int statusCode, String message) {
+
+
         return Login.builder()
                 .email(email)
-                .password(password)
                 .expectation(Expectation.builder()
                         .statusCode(statusCode)
                         .message(message)
                         .build())
                 .build();
+
+
     }
 }

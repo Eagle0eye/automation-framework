@@ -1,5 +1,6 @@
 package provider;
 
+import DTO.Login;
 import DTO.Register;
 import com.github.javafaker.Faker;
 import org.slf4j.Logger;
@@ -9,8 +10,7 @@ import util.RandomDateGenerator;
 
 import java.time.LocalDate;
 
-import static variables.AuthVariables.validEmail;
-import static variables.AuthVariables.validPassword;
+import static variables.AuthVariables.*;
 import static variables.UserVariables.*;
 
 public class RegisterProvider {
@@ -44,7 +44,8 @@ public class RegisterProvider {
 
     @DataProvider(name = "RegisterInvalidExistEmail")
     public Register[] registerInvalidExistEmail() {
-        return new Register[]{buildFullInfo().toBuilder().email(validEmail).password(validPassword).build()};
+        Login form = LOGIN;
+        return new Register[]{buildFullInfo().toBuilder().email(form.getEmail()).password(form.getPassword()).build()};
     }
 
 

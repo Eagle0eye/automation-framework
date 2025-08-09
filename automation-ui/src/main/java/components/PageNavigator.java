@@ -1,11 +1,10 @@
-package support.helpers;
+package components;
 
-import repository.CacheRepository;
+import org.openqa.selenium.support.FindBy;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,14 +13,16 @@ import pages.authentication.LoginPage;
 import pages.cart.CartPage;
 import pages.connections.ContactUsPage;
 import pages.products.ProductsPage;
-import pages.shared.validations.ValidationPage;
-import pages.shared.validations.VideoTutorials;
 import pages.testcases.APITestingPage;
 import pages.testcases.TestCasePage;
+import services.UserProfileServiceImpl;
+import validators.ValidationPage;
+import validators.VideoTutorials;
 
 
 public class PageNavigator {
     private final WebDriver driver;
+    private final UserProfileServiceImpl userService = new UserProfileServiceImpl();
 
     @FindBy(xpath = "//a[contains(@href,'/') and i[contains(@class,'fa-home')]]")
     protected WebElement homeLink;
@@ -119,7 +120,7 @@ public class PageNavigator {
     public void Logout() {
         WebElement logoutLink = driver.findElement(By.linkText("Logout"));
         logoutLink.click();
-        CacheRepository.clear();
         log.info("Logout");
+        userService.logout();
     }
 }

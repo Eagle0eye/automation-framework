@@ -12,7 +12,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.HomePage;
 import provider.ProductProvider;
-import pages.shared.components.Filter;
+import components.Filter;
 
 import java.util.Map;
 

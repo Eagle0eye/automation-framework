@@ -4,16 +4,14 @@
     import lombok.Builder;
     import lombok.Data;
 
-    import java.time.Instant;
     import java.util.Set;
 
     @Data
-    @Builder
+    @Builder( toBuilder = true)
     public class SessionCache {
         private String email;
-        private UserInfo accountInfo;
+        private String accountInfo;
         private Set<ProductCache> cartItems;
-        private Instant createdAt;
-        private Instant lastUpdated;
-
+        private String createdAt;
+        private String lastUpdated;
     }

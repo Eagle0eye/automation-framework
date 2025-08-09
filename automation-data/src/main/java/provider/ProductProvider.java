@@ -1,5 +1,7 @@
 package provider;
 
+import DTO.ProductInfo;
+import models.ProductCache;
 import org.testng.annotations.DataProvider;
 
 import variables.ProductVariables;
@@ -8,23 +10,28 @@ import java.util.*;
 import java.util.Map.Entry;
 
 import static util.ProductsGenerator.generateProducts;
+import static util.ProductsGenerator.generateRecommendedProducts;
 
 
 public class ProductProvider {
-    @DataProvider(name = "generatedProducts")
+
+    @DataProvider(name = "Products")
     public Object[][] getGeneratedProducts() {
-        Map<String, Integer> products = generateProducts(2);
+        Set<ProductInfo> products = generateProducts(5);
         return new Object[][] { { products } };
     }
 
+    @DataProvider(name = "RecommendedProducts")
+    public Object[][] getGenerateRecommendedProducts() {
+        Set<ProductInfo> products = generateRecommendedProducts(5);
+        return new Object[][] { { products } };
+    }
 
-    @DataProvider(name = "generatedEmptyProducts")
+    @DataProvider(name = "EmptyProducts")
     public Object[][] dataProvider() {
-        Map<String, Integer> products = new HashMap<>();
+        Set<ProductCache> products = new HashSet<>();
         return new Object[][] { { products } };
     }
-
-
 
     @DataProvider(name = "SearchValues")
     public static Object[][] getRandomSearchValue() {

@@ -3,20 +3,19 @@ package variables;
 import DTO.Login;
 import com.github.javafaker.Faker;
 
-import static util.EmailGenerator.generate;
+import static util.EmailGenerator.generateUser;
 
 public class AuthVariables {
     private static final Faker faker = new Faker();
 
-    public static String invalidEmail = faker.internet().emailAddress();
-    public static String invalidPassword =faker.internet().password();
+    public static String INVALID_EMAIL = faker.internet().emailAddress();
+    public static String INVALID_PASSWORD =faker.internet().password();
 
 
-    private static final Login login = generate();
-    public static String validEmail = login.getEmail();
-    public static String validPassword = login.getPassword();
+    public static final Login LOGIN = generateUser();
 
-    public static String accessToken = "";
-    public static String refreshToken = "";
+
+    public static String ACCESS_TOKEN = "";
+    public static String REFRESH_TOKEN = "";
 
 }

@@ -1,6 +1,7 @@
 package mongo;
 
 import DTO.Login;
+import DTO.PersonalInfo;
 import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import org.slf4j.Logger;
@@ -24,8 +25,22 @@ public class AuthRepository {
 
         for (Document doc : collection.find()) {
             users.add(Login.builder()
-                            .email(doc.getString("email"))
-                            .password(doc.getString("password"))
+                        .email(doc.getString("email"))
+                        .password(doc.getString("password"))
+                        .personalInfo(PersonalInfo.builder()
+                            .name(doc.getString("name"))
+                            .title(doc.getString("title"))
+                            .firstname(doc.getString("first_name"))
+                            .lastname(doc.getString("last_name"))
+                            .company(doc.getString("company"))
+                            .address(doc.getString("address1"))
+                            .address2(doc.getString("address2"))
+                            .country(doc.getString("country"))
+                            .city(doc.getString("city"))
+                            .state(doc.getString("state"))
+                            .zipcode(doc.getString("zipcode"))
+                            .phone(doc.getString("phone"))
+                            .build())
                     .build());
         }
 

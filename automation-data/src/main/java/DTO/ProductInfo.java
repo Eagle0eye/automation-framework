@@ -1,11 +1,12 @@
 package DTO;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
-@Builder
+@Getter
+@Builder(toBuilder = true)
 public class ProductInfo {
     private String name;
     private int price;
+    private int quantity;
 }

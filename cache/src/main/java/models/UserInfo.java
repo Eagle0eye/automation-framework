@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder(toBuilder = true)
 public class UserInfo {
 
-    private String title, name, email, password;
+    private String title, name, email;
     private String firstname, lastname;
     private String company,address, address2;
     private String country, state, city, zipcode, phone;
@@ -15,18 +15,13 @@ public class UserInfo {
     @Override
     public String toString() {
         return String.format(
-                "%s. %s %s\n%s\n%s\n%s\n%s\n%s\n%s %s %s\n%s\n%s",
-                title,
-                firstname,
-                lastname,
+                "%s. %s %s\n%s\n%s\n%s\n%s\n%s %s %s\n%s\n%s",
+                title, firstname, lastname,
                 email,
-                password,
                 company,
                 address,
                 address2,
-                city,
-                state,
-                zipcode,
+                city, state, zipcode,
                 country,
                 phone
         );

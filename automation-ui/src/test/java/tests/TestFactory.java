@@ -13,6 +13,7 @@ import tests.testcases.TC07_TestCases_Test;
 
 
 public class TestFactory {
+
     @Factory
     public Object[] createInstances() {
         DRIVERS driver = DRIVERS.CHROME;
@@ -24,7 +25,9 @@ public class TestFactory {
                 new TC04_Logout_Test(),
                 new TC05_Registration_InvalidTest(),
                 new TC06_ContactUs_Test(),
-                new TC07_TestCases_Test()
+                new TC07_TestCases_Test(),
+
         };
     }
+
 }

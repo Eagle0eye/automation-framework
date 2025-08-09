@@ -7,8 +7,9 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import pages.HomePage;
 import pages.authentication.LoginPage;
-import pages.shared.validations.ValidationPage;
+
 import provider.RegisterProvider;
+import validators.ValidationPage;
 
 import static base.DRIVERS.CHROME;
 

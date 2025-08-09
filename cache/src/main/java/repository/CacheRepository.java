@@ -1,35 +1,59 @@
+// CacheRepository.java
 package repository;
 
-import models.ProductCache;
-import models.SessionCache;
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
+import lombok.Getter;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class CacheRepository {
-    private static final Map<String, Object> dataStore = new HashMap<>();
-    private static final String SESSION_PREFIX = "session-";
+    private static final Cache<String, Object> sessionCache =
+            Caffeine.newBuilder()
+                    .expireAfterAccess(30, TimeUnit.MINUTES)
+                    .build();
 
-    public static void saveSession(SessionCache session) {
-        dataStore.put(SESSION_PREFIX + session.getEmail(), session);
+    @Getter
+    private static final Set<String> sessionKeys = new HashSet<>();
+
+    @Getter
+    private static final Set<String> completedOrders = new HashSet<>();
+
+    public static void save_session(String key, Object session) {
+        sessionCache.put(key, session);
+        sessionKeys.add(key);
+        view_session(key);
     }
 
-    public static Optional<SessionCache> getSession(String email) {
-        Object session = dataStore.get(SESSION_PREFIX + email);
-        return session instanceof SessionCache
-                ? Optional.of((SessionCache) session)
-                : Optional.empty();
+    public static Optional<Object> view_session(String key) {
+        return Optional.ofNullable(sessionCache.getIfPresent(key));
     }
 
-    public static void saveProduct(ProductCache product) {
-        dataStore.put("product-" + product.getProductName(), product);
+    public static List<Optional<Object>> view_all_sessions() {
+        return List.copyOf(sessionKeys.stream().map(CacheRepository::view_session).toList());
     }
 
-    public static Optional<ProductCache> getProduct(String productName) {
-        Object product = dataStore.get("product-" + productName);
-        return product instanceof ProductCache
-                ? Optional.of((ProductCache) product)
-                : Optional.empty();
+    public static void remove_session(String key) {
+        sessionCache.invalidate(key);
+        sessionKeys.remove(key);
     }
+
+    public static void clear_all_sessions() {
+        sessionKeys.clear();
+        sessionCache.invalidateAll();
+    }
+
+    public static void markOrderCompleted(String email) {
+        completedOrders.add(email);
+        remove_session("session-" + email);
+    }
+
+    public static boolean hasCompletedOrder(String email) {
+        return completedOrders.contains(email);
+    }
+
 }
